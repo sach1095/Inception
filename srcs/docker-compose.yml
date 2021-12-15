@@ -3,18 +3,18 @@ networks:
     inception:
 
 volumes:
-    wordpress: {}
-        # driver: local
-        # driver_opts:
-        #     type: 'none'
-        #     o: 'bind'
-        #     device: '/Users/sbaranes/data/wordpress'
-    dbdata: {}
-        # driver: local
-        # driver_opts:
-        #     type: 'none'
-        #     o: 'bind'
-        #     device: '/Users/sbaranes/data/database'
+    wordpress:
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: 'bind'
+            device: '/home/sbaranes/data/wordpress'
+    dbdata:
+        driver: local
+        driver_opts:
+            type: 'none'
+            o: 'bind'
+            device: '/home/sbaranes/data/database'
 
 services:
     mariadb:

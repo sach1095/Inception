@@ -2,7 +2,7 @@ mkdir var/www/wordpress
 cd /var/www/wordpress
 mv /wp-config.php ./
 wp core download --allow-root
-wp core install --url="https://localhost" --title="ENFIN/ $1" --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root
+wp core install --url="https://sbaranes.42.fr" --title="ENFIN/ $1" --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL --allow-root
 wp user create $USER_NAME $USER_EMAIL --user_pass=$USER_PASSWORD --role=editor --allow-root
 
 chown www-data:www-data /var/www
