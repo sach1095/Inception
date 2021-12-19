@@ -18,14 +18,7 @@ volumes:
 
 services:
     mariadb:
-        build:
-          context: ./requirements/mariadb
-          args:
-              - MYSQL_ROOT=${MYSQL_ROOT}
-              - MYSQL_USER=${MYSQL_USER}
-              - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-              - MYSQL_DATABASE=${MYSQL_DATABASE}
-              - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        build: ./requirements/mariadb
         container_name: mariadb
         ports:
             - 3306:3306
