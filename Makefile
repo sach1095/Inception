@@ -4,7 +4,7 @@ CLEAN = srcs/requirements/tools/clean.sh
 all : up
 
 up :
-	@ docker-compose -f $(COMPOSE) up -d --build
+	@ docker-compose -f $(COMPOSE) up --build
 
 # stop services
 stop :

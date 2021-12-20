@@ -8,20 +8,21 @@
 
 # exec mysqld -u root -proot --datadir="/var/lib/mysql"
 
-/usr/bin/mysqld_safe & while ! nc -vz localhost 3306; do sleep 1; done
+# /usr/bin/mysqld_safe & while ! nc -vz localhost 3306; do sleep 1; done
 
 # /usr/bin/mysql -uroot -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci"
 # /usr/bin/mysql -uroot -e "GRANT ALL ON $MYSQL_DATABASE .* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
 # /usr/bin/mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
 
-# service mysql start
-echo "CREATE DATABASE $MYSQL_DATABASE;" | mysql -u root
-echo "CREATE USER '$MYSQL_USER'@'%';" | mysql -u root
-echo "SET password FOR '$MYSQL_USER'@'%' = password('$MYSQL_PASSWORD');" | mysql -u root
-echo "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" | mysql -u root
+service mysql start
+echo "CREATE DATABASE wordpress;" | mysql -u root
+echo "CREATE USER 'wordpress_user'@'%';" | mysql -u root
+echo "SET password FOR 'wordpress_user'@'%' = password('wordpress_password');" | mysql -u root
+echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress_user'@'%' IDENTIFIED BY 'wordpress_password';" | mysql -u root
 echo "FLUSH PRIVILEGES;" | mysql -u root
 
-mysqladmin -u root -p$MYSQL_ROOT_PASSWORD shutdown
+# mysqladmin -u root -p$MYSQL_ROOT_PASSWORD shutdown
+# mysqladmin -u root -pprout shutdown
 
-while nc -vz localhost 3306; do sleep 1; done
+# while nc -vz localhost 3306; do sleep 1; done
 exec /usr/sbin/mysqld

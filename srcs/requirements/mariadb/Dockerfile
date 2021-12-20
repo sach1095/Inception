@@ -2,18 +2,27 @@ FROM debian:buster
 
 EXPOSE 3306
 
-RUN apt-get -y update
-RUN apt-get install -y mariadb-server mariadb-client wget
-RUN wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64
-RUN chmod +x /usr/bin/dumb-init
+# ARG MYSQL_ROOT \
+# 	MYSQL_USER \
+# 	MYSQL_PASSWORD \
+# 	MYSQL_DATABASE \
+# 	MYSQL_ROOT_PASSWORD
 
-COPY conf/start.sh ./
+# ENV MYSQL_ROOT $MYSQL_ROOT
+# ENV MYSQL_USER $MYSQL_USER
+# ENV MYSQL_PASSWORD $MYSQL_PASSWORD
+# ENV MYSQL_DATABASE $MYSQL_DATABASE
+# ENV MYSQL_ROOT_PASSWORD $MYSQL_ROOT_PASSWORD
+
+RUN apt-get -y update
+RUN apt-get install -y mariadb-server mariadb-client
+
 RUN rm /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY conf/mariadb-server.cnf /etc/mysql/mariadb.conf.d/
+COPY conf/config_db.sh ./
+COPY conf/create_db.sql ./
 
 RUN chown -R mysql:mysql /var/lib/mysql
 RUN chmod 777 /var/lib/*
-RUN chmod 777 start.sh
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["bash", "start.sh"]
-CMD ["mysqld"]
+
+CMD ["bash", "/config_db.sh"]
