@@ -1,27 +1,20 @@
 COMPOSE = srcs/docker-compose.yml
-CLEAN = srcs/requirements/tools/clean.sh
 
 all : up
 
 up :
-	@ docker-compose -f $(COMPOSE) up --build
+	@ docker-compose -f $(COMPOSE) up -d --build
 
-# stop services
-stop :
-	@ docker-compose -f $(COMPOSE) stop
-
-# stop service and remove containers, networks
 down :
 	@ docker-compose -f $(COMPOSE) down
 
-# rm images, containers, volumes
-clean :
-	@ bash $(CLEAN)
+clean:
+	docker-compose -f srcs/docker-compose.yml down
 
-# remove all unused containers, networks, images
-prune :
-	@ docker system prune
+fclean: down
+	sh srcs/tools/delete_all.sh
 
-# show containers
-ps :
-	@ docker-compose -f $(COMPOSE) ps
+prune:
+	docker system prune -a --force
+
+.PHONY: all up down clean fclean prune

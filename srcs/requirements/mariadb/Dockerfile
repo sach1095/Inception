@@ -1,28 +1,18 @@
 FROM debian:buster
 
-EXPOSE 3306
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install mariadb-server -y
 
-# ARG MYSQL_ROOT \
-# 	MYSQL_USER \
-# 	MYSQL_PASSWORD \
-# 	MYSQL_DATABASE \
-# 	MYSQL_ROOT_PASSWORD
+COPY ./tools/50-server.cnf ./etc/mysql/mariadb.conf.d
+COPY ./tools/create_env.sh ./
+COPY ./tools/create_db.sql ./
 
-# ENV MYSQL_ROOT $MYSQL_ROOT
-# ENV MYSQL_USER $MYSQL_USER
-# ENV MYSQL_PASSWORD $MYSQL_PASSWORD
-# ENV MYSQL_DATABASE $MYSQL_DATABASE
-# ENV MYSQL_ROOT_PASSWORD $MYSQL_ROOT_PASSWORD
+ARG MYSQL_DATABASE
+ARG MYSQL_USER
+ARG MYSQL_PASSWORD
+ARG MYSQL_ROOT_PASSWORD
 
-RUN apt-get -y update
-RUN apt-get install -y mariadb-server mariadb-client
+RUN sh create_env.sh
+RUN service mysql start && mysql < create_db.sql
 
-RUN rm /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY conf/mariadb-server.cnf /etc/mysql/mariadb.conf.d/
-COPY conf/config_db.sh ./
-COPY conf/create_db.sql ./
-
-RUN chown -R mysql:mysql /var/lib/mysql
-RUN chmod 777 /var/lib/*
-
-CMD ["bash", "/config_db.sh"]
+CMD mysqld_safe
