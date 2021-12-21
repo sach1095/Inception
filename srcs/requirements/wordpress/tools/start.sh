@@ -14,6 +14,7 @@ cp wp-config.php var/www/wordpress
 cd var/www/wordpress
 wp-cli core download --allow-root
 wp-cli core install --url=${DOMAIN_NAME} --title=${WP_TITLE} --admin_user=${MYSQL_USER} --admin_password=${MYSQL_PASSWORD} --admin_email=${WP_MAIL} --allow-root
+wp-cli 
 cd ../../..
 cp www.conf etc/php/7.3/fpm/pool.d
 service php7.3-fpm start

@@ -29,6 +29,9 @@ services:
                     - MYSQL_USER=${MYSQL_USER}
                     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
                     - MYSQL_HOST=${MYSQL_HOST}
+                    - WP_EDITOR_USER=${WP_EDITOR_USER}
+                    - WP_EDITOR_PASSWORD=${WP_EDITOR_PASSWORD}
+                    - WP_EDITOR_EMAIL=${WP_EDITOR_EMAIL}
                 restart: always
 
         mariadb:
