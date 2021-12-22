@@ -6,4 +6,5 @@ if [ ! -d "/tmp/true" ]; then
 
 fi
 
-mysqld
+service mysql start && /usr/bin/mysqld_safe --datadir=/usr/bin/mysql
+exec mysqld -u root -proot --datadir="/usr/bin/mysql"
