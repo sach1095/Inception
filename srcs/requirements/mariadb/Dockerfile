@@ -1,7 +1,10 @@
 FROM debian:buster
 
+EXPOSE 3306
+
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install mariadb-server -y
+RUN apt-get install mariadb-server mariadb-client -y
+RUN rm /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY ./tools/50-server.cnf ./etc/mysql/mariadb.conf.d
 COPY ./tools/create_env.sh ./
@@ -13,6 +16,5 @@ ARG MYSQL_PASSWORD
 ARG MYSQL_ROOT_PASSWORD
 
 RUN sh create_env.sh
-RUN service mysql start && mysql < create_db.sql
 
-CMD mysqld_safe
+CMD mysqld && sh script.sh
