@@ -29,6 +29,9 @@ services:
                     - MYSQL_USER=${MYSQL_USER}
                     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
                     - MYSQL_HOST=${MYSQL_HOST}
+                    - USER_NAME=${USER_NAME}
+                    - EMAIL_ADDRESS=${EMAIL_ADDRESS}
+                    - USER_PASSWORD=${USER_PASSWORD}
                 restart: always
 
         mariadb:

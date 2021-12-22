@@ -17,4 +17,6 @@ fclean: down
 prune:
 	docker system prune -a --force
 
+re: fclean up
+
 .PHONY: all up down clean fclean prune

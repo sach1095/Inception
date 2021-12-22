@@ -13,9 +13,10 @@ cp wp-config.php var/www/wordpress
 
 cd var/www/wordpress
 wp-cli core download --allow-root
+wp core config --dbname=dbwordpress --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=mariadb --dbprefix=wp_ --allow-root
 wp-cli core install --url=${DOMAIN_NAME} --title=${WP_TITLE} --admin_user=${MYSQL_USER} --admin_password=${MYSQL_PASSWORD} --admin_email=${WP_MAIL} --allow-root
+wp user create ${USER_NAME} ${EMAIL_ADDRESS} --user_pass=${USER_PASSWORD} --role=subscriber --allow-root
+chmod 777 /var/www
 cd ../../..
-cp www.conf etc/php/7.3/fpm/pool.d
-service php7.3-fpm start
-service php7.3-fpm stop
-php-fpm7.3 -F -R
+mkdir -p /run/php
+php-fpm7.3 -F
