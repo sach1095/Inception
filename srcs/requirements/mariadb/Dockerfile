@@ -8,6 +8,7 @@ RUN rm /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY ./tools/50-server.cnf ./etc/mysql/mariadb.conf.d
 COPY ./tools/create_env.sh ./
+COPY ./tools/start_safe.sh ./
 COPY ./tools/create_db.sql ./
 
 ARG MYSQL_DATABASE
@@ -17,4 +18,4 @@ ARG MYSQL_ROOT_PASSWORD
 
 RUN sh create_env.sh
 
-CMD mysqld && sh script.sh
+# CMD mysqld && sh start_safe.sh
