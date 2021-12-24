@@ -19,16 +19,18 @@ services:
                     - mariadb
                 networks:
                     - Inception_Network
+                env_file:
+                    - ./.env
                 volumes:
                     - wordpress:/var/www/wordpress
-                environment:
-                    - DOMAIN_NAME=${DOMAIN_NAME}
-                    - WP_TITLE=${WP_TITLE}
-                    - WP_MAIL=${WP_MAIL}
-                    - MYSQL_DATABASE=${MYSQL_DATABASE}
-                    - MYSQL_USER=${MYSQL_USER}
-                    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-                    - MYSQL_HOST=${MYSQL_HOST}
+                # environment:
+                #     - DOMAIN_NAME=${DOMAIN_NAME}
+                #     - WP_TITLE=${WP_TITLE}
+                #     - WP_MAIL=${WP_MAIL}
+                #     - MYSQL_DATABASE=${MYSQL_DATABASE}
+                #     - MYSQL_USER=${MYSQL_USER}
+                #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+                #     - MYSQL_HOST=${MYSQL_HOST}
                 restart: always
 
         mariadb:
