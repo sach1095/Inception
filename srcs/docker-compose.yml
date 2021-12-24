@@ -14,35 +14,21 @@ services:
             restart: always
 
         wordpress:
-                build:
-                    context: ./requirements/wordpress
-                    args:
-                        - DOMAIN_NAME=${DOMAIN_NAME}
-                        - WP_TITLE=${WP_TITLE}
-                        - WP_MAIL=${WP_MAIL}
-                        - MYSQL_DATABASE=${MYSQL_DATABASE}
-                        - MYSQL_USER=${MYSQL_USER}
-                        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-                        - MYSQL_HOST=${MYSQL_HOST}
-                        - USER_NAME=${USER_NAME}
-                        - EMAIL_ADDRESS=${EMAIL_ADDRESS}
-                        - USER_PASSWORD=${USER_PASSWORD}
+                build: ./requirements/wordpress
                 depends_on: 
                     - mariadb
                 networks:
                     - Inception_Network
+                env_file:
+                    - ./.env
                 volumes:
                     - wordpress:/var/www/wordpress
                 restart: always
 
         mariadb:
-                build:
-                  context: ./requirements/mariadb
-                  args:
-                    - MYSQL_DATABASE=${MYSQL_DATABASE}
-                    - MYSQL_USER=${MYSQL_USER}
-                    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-                    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+                build: ./requirements/mariadb
+                env_file:
+                    - ./.env
                 networks:
                     - Inception_Network
                 volumes:

@@ -4,32 +4,17 @@ EXPOSE 9000
 
 RUN apt-get update -y
 RUN apt-get install wget -y
-RUN apt-get install php-fpm -y
-RUN apt-get install php-mysqlnd -y
+RUN apt-get install php7.4-fpm -y
+RUN apt-get install php7.4-mysql -y
 
-ARG DOMAIN_NAME
-ARG WP_TITLE
-ARG WP_MAIL
-ARG MYSQL_DATABASE
-ARG MYSQL_USER
-ARG MYSQL_PASSWORD
-ARG MYSQL_HOST
-ARG MYSQL_ROOT_PASSWORD
-ARG USER_NAME
-ARG EMAIL_ADDRESS
-ARG USER_PASSWORD
-
-COPY ./tools/create_env.sh ./
 COPY ./tools/create_wp.sh ./
 COPY ./tools/wp-config.php ./
-COPY ./tools/www.conf ./etc/php/7.3/fpm/pool.d
+COPY ./tools/download_utils.sh ./
 
-RUN sh create_env.sh
-
-RUN mkdir -p var/www/wordpress
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /usr/local/bin/wp-cli
-RUN cp wp-config.php var/www/wordpress
+RUN sh download_utils.sh
 RUN sh create_wp.sh
-CMD php-fpm7.3 -F -R
+RUN sed -i "s/\/run\/php\/php7.4-fpm.sock/0.0.0.0:9000/g" /etc/php/7.4/fpm/pool.d/www.conf && \
+	sed -i 's/;clear_env = no/clear_env = no/g' /etc/php/7.4/fpm/pool.d/www.conf && \
+	sed -i 's/variables_order = "GPCS"/variables_order = "EGPCS"/g' /etc/php/7.4/fpm/php.ini
+RUN mkdir -p /run/php
+CMD php-fpm7.4 -F -R
