@@ -8,15 +8,13 @@ up :
 down :
 	@ docker-compose -f $(COMPOSE) down
 
-clean:
-	docker-compose -f srcs/docker-compose.yml down
+clean: down
+	sh srcs/tools/clean.sh
 
 fclean: down
 	sh srcs/tools/delete_all.sh
 
 prune:
 	docker system prune -a --force
-
-re: fclean up
 
 .PHONY: all up down clean fclean prune
