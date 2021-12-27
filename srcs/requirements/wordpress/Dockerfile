@@ -9,4 +9,6 @@ COPY ./tools/start.sh ./
 COPY ./tools/wp-config.php ./
 COPY ./tools/www.conf ./
 
-ENTRYPOINT sh start.sh
+RUN wget https://fr.wordpress.org/wordpress-5.7-fr_FR.tar.gz && tar xvf wordpress-5.7-fr_FR.tar.gz
+
+# ENTRYPOINT sh start.sh

@@ -15,7 +15,8 @@ Commande utile a retenir :
 
 mariabd :
 	- service --status-all - pour verifier le status des service.
-	- SHOW TABLES FROM dbwordpress; - pour afficher le contenu de la database.
+	- USE dbwordpress; - pour selectioner la database.
+	- SHOW TABLES; - pour afficher le contenu de la database.
 
 docker :
 	- docker logs -f <db_container_name> - pour avoir les log d'erreur du container demander
