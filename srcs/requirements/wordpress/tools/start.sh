@@ -18,12 +18,12 @@
 # fi
 # php-fpm7.3 -F -R
 
-
-
 if [ ! -d "/var/www/wordpress" ]; then
-	mv wordpress /var/www
+	mkdir -p /var/www/wordpress
+	wp --allow-root core download --path=/var/www/wordpress
+	cp wp-config.php var/www/wordpress
 	chown -Rv www-data: /var/www/
 	wp --allow-root core install --path=/var/www/wordpress --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$MYSQL_USER --admin_password=$MYSQL_PASSWORD --admin_email=$WP_MAIL
 	wp --allow-root --path=/var/www/wordpress user create $USER_NAME $EMAIL_ADDRESS --role=$USER_ROLE --user_pass=$USER_PASSWORD
-	php-fpm7.3 -F -R
+	php-fpm7.3 -F
 	fi
