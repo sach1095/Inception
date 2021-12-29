@@ -45,7 +45,7 @@ server {
 	# Add index.php to the list if you are using PHP
 	index index.html index.htm index.php index.nginx-debian.html;
 
-	server_name sbaranes.42.fr www.sbaranes.42.fr;
+	server_name sbaranes.42.fr;
 
 	location / {
 		# First attempt to serve request as file, then
